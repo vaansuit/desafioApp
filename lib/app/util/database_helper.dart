@@ -50,11 +50,11 @@ class DatabaseHelper {
     ''');
     await db.execute("INSERT INTO user(login,pass) VALUES('ADMIN','1234')");
     await db.execute(
-        "INSERT INTO sale(customerName, itemName, itemPrice, quantity, totalInvoice) VALUES ('Teste', 'Salgado', 5.63, 2, 11.26)");
+        "INSERT INTO sale(customerName, itemName, itemPrice, quantity, totalInvoice) VALUES ('Joãozinho Maluco', 'Salgado', 5.63, 2, 11.26)");
     await db.execute(
-        "INSERT INTO sale(customerName, itemName, itemPrice, quantity, totalInvoice) VALUES ('Teste2', 'Milho', 2.5, 3, 7.5)");
+        "INSERT INTO sale(customerName, itemName, itemPrice, quantity, totalInvoice) VALUES ('Clebinho do grau', 'Milho', 2.5, 3, 7.5)");
     await db.execute(
-        "INSERT INTO sale(customerName, itemName, itemPrice, quantity, totalInvoice) VALUES ('Teste3', 'Coca-cola ', 7.50, 2, 15)");
+        "INSERT INTO sale(customerName, itemName, itemPrice, quantity, totalInvoice) VALUES ('Fantasma', 'Coca-cola ', 7.50, 2, 15)");
   }
 
   Future<void> deleteDb() async {

@@ -63,7 +63,23 @@ class _HomePageState extends State<HomePage> {
             Row(
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Sincronizado com sucesso!'),
+                            actions: <Widget>[
+                              ElevatedButton(
+                                child: const Text('Ok'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        });
+                  },
                   child: const Text('Sincronizar'),
                 ),
               ],
