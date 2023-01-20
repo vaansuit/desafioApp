@@ -1,16 +1,20 @@
 # desafio_app
 
-A new Flutter project.
+Aplicativo em Flutter utilizando SQFLite como banco de dados. 
+Funções: 
+  Cadastrasr cliente.
+  Cadastrar produtos.
+  Consulta de vendas.
+  Fake button sincronizar.
 
-## Getting Started
+Como rodar:
 
-This project is a starting point for a Flutter application.
+Baixe o projeto ou faça um clone.
+Rode o comando flutter pub get para baixar todas as dependências.
 
-A few resources to get you started if this is your first Flutter project:
+Usuário: ADMIN
+Senha: 1234
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Demo:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![preview](https://user-images.githubusercontent.com/33068334/213774936-a35eab99-4608-4813-b217-1e6e741e27de.gif)
