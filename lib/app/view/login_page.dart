@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
+
+import '../util/database_helper.dart';
+import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -8,63 +12,76 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
+  String? _username;
+  String? _password;
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
+  bool _isButtonDisabled = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Tela de Login'),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Row(
-              children: const [
-                Icon(Icons.abc),
-                SizedBox(
-                  width: 10,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                onSaved: (value) => _username = value,
+                decoration: const InputDecoration(
+                  labelText: 'Usuário ADMIN',
                 ),
-                Text('Login'),
-                SizedBox(
-                  width: 30,
+              ),
+              TextFormField(
+                onSaved: (value) => _password = value,
+                decoration: const InputDecoration(
+                  labelText: 'Senha 1234',
                 ),
-                Flexible(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      helperText: 'Usuario ADMIN',
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: const [
-                Icon(Icons.abc),
-                SizedBox(
-                  width: 10,
-                ),
-                Text('Senha'),
-                SizedBox(
-                  width: 30,
-                ),
-                Flexible(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      helperText: 'Senha 1234',
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text('Login'),
-            ),
-          ],
+                obscureText: true,
+              ),
+              ElevatedButton(
+                onPressed: _isButtonDisabled ? null : _checkCredentials,
+                child: const Text('Login'),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  void _checkCredentials() async {
+    _formKey.currentState!.save();
+    _isButtonDisabled = true;
+    final Database? db = await _databaseHelper.db;
+    final List<Map> result = await db!.rawQuery(
+        "SELECT * FROM user WHERE login = '$_username' AND pass = '$_password'");
+    if (result.isNotEmpty) {
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    } else {
+      _isButtonDisabled = false;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Erro!'),
+            content: const Text('Usuário e/ou senha inválido!'),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }
