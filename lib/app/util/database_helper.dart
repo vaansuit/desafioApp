@@ -81,4 +81,28 @@ class DatabaseHelper {
     final List<Map<String, dynamic>>? results = await db?.query('sale');
     return Future.value(results);
   }
+
+  Future<List<Map<String, dynamic>>> getClient() async {
+    final Database? db = await this.db;
+    final List<Map<String, dynamic>>? results = await db?.query('client');
+    return Future.value(results);
+  }
+
+  Future<List<Map<String, dynamic>>> selectItemName() async {
+    final db = await this.db;
+    final List<Map<String, dynamic>> result =
+        await db!.rawQuery('SELECT itemName FROM product');
+    return result;
+  }
+
+  Future<List<Map<String, dynamic>>> getPriceByName(String itemName) async {
+    final db = await this.db;
+    final List<Map<String, dynamic>> results = await db!.query(
+      'product',
+      columns: ['itemPrice'],
+      where: 'itemName = ?',
+      whereArgs: [itemName],
+    );
+    return results;
+  }
 }

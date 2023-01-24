@@ -26,7 +26,7 @@ class _AddProductState extends State<AddProduct> {
 
   void _showProducts() async {
     final Database? db = await _databaseHelper.db;
-    final List<Map> result = await db!.rawQuery("SELECT * FROM sale");
+    final List<Map> result = await db!.rawQuery("SELECT * FROM product");
     print(result);
   }
 
@@ -59,7 +59,7 @@ class _AddProductState extends State<AddProduct> {
               ElevatedButton(
                   child: const Text("Adicionar"),
                   onPressed: () {
-                    _showProducts();
+                    _addProduct();
                     Navigator.of(context).pop();
                   }),
             ],

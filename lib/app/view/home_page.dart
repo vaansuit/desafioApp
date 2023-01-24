@@ -1,5 +1,6 @@
 import 'package:desafio_app/app/view/widgets/add_client.dart';
 import 'package:desafio_app/app/view/widgets/add_product.dart';
+import 'package:desafio_app/app/view/widgets/shopping_cart.dart';
 import 'package:desafio_app/app/view/widgets/show_sale.dart';
 import 'package:flutter/material.dart';
 
@@ -17,84 +18,91 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Page'),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () => showDialog(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Home Page'),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              const SizedBox(
+                height: 58,
+                child: DrawerHeader(
+                  margin: EdgeInsets.only(
+                    bottom: 2,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                  ),
+                  child: Text('Olá, ADMIN'),
+                ),
+              ),
+              ListTile(
+                title: const Text('Cadastro de produto'),
+                onTap: () => showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const AddProduct();
+                    }),
+              ),
+              ListTile(
+                title: const Text('Cadastro de clientes'),
+                onTap: () => showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const AddClient();
+                    }),
+              ),
+              ListTile(
+                title: const Text('Realizar venda'),
+                onTap: () => showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const ShoppingCart();
+                    }),
+              ),
+              ListTile(
+                title: const Text('Histórico de vendas'),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ShowSale()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Sincronizar'),
+                onTap: () {
+                  showDialog(
                       context: context,
                       builder: (context) {
-                        return const AddProduct();
-                      }),
-                  child: const Text('Cadastro Produto'),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () => showDialog(
-                      context: context,
-                      builder: (context) {
-                        return const AddClient();
-                      }),
-                  child: const Text('Cliente'),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => ShowSale()),
-                    );
-                  },
-                  child: const Text('Vendas'),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Sincronizado com sucesso!'),
-                            actions: <Widget>[
-                              ElevatedButton(
-                                child: const Text('Ok'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
-                        });
-                  },
-                  child: const Text('Sincronizar'),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    await _databaseHelper.deleteDb();
-                  },
-                  child: const Text('Deletar base de dados'),
-                ),
-              ],
-            ),
-          ],
+                        return AlertDialog(
+                          title: const Text('Sincronizado com sucesso!'),
+                          actions: <Widget>[
+                            ElevatedButton(
+                              child: const Text('Ok'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      });
+                },
+              ),
+              ListTile(
+                title: const Text('Deletar banco de dados'),
+                onTap: () async {
+                  await _databaseHelper.deleteDb();
+                },
+              ),
+            ],
+          ),
+        ),
+        body: Center(
+          child: Column(
+            children: const [],
+          ),
         ),
       ),
     );
