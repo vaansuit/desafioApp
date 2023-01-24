@@ -17,32 +17,134 @@ class _LoginPageState extends State<LoginPage> {
   String? _password;
   final DatabaseHelper _databaseHelper = DatabaseHelper();
   bool _isButtonDisabled = false;
+  BoxConstraints constraints = const BoxConstraints();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Form(
-          key: _formKey,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 32, 32, 32),
+        body: SingleChildScrollView(
           child: Column(
-            children: <Widget>[
-              TextFormField(
-                onSaved: (value) => _username = value,
-                decoration: const InputDecoration(
-                  labelText: 'Usuário ADMIN',
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 50,
+                    bottom: 50,
+                  ),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.8,
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            20,
+                          ),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            spreadRadius: 10,
+                            blurRadius: 10,
+                          ),
+                        ]),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 20,
+                              bottom: 20,
+                            ),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              height: 200,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage('img/icon_guts.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 20,
+                              left: 20,
+                              right: 20,
+                            ),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              height: 50,
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 92, 188, 236),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                              child: TextFormField(
+                                onSaved: (value) => _username = value,
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  labelText: 'Usuário ADMIN',
+                                  labelStyle: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                  prefixIcon: Icon(Icons.person),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 20,
+                              left: 20,
+                              right: 20,
+                              bottom: 30,
+                            ),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              height: 50,
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 92, 188, 236),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                              child: TextFormField(
+                                onSaved: (value) => _password = value,
+                                obscureText: true,
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  labelText: 'Senha 1234',
+                                  labelStyle: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                  prefixIcon: Icon(
+                                    Icons.lock,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            child: ElevatedButton(
+                              onPressed:
+                                  _isButtonDisabled ? null : _checkCredentials,
+                              child: const Text('Login'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              TextFormField(
-                onSaved: (value) => _password = value,
-                decoration: const InputDecoration(
-                  labelText: 'Senha 1234',
-                ),
-                obscureText: true,
-              ),
-              ElevatedButton(
-                onPressed: _isButtonDisabled ? null : _checkCredentials,
-                child: const Text('Login'),
               ),
             ],
           ),

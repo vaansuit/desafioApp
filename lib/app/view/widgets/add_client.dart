@@ -24,7 +24,7 @@ class _AddClientState extends State<AddClient> {
 
   void _showClient() async {
     final Database? db = await _databaseHelper.db;
-    final List<Map> result = await db!.rawQuery("SELECT * FROM client");
+    final List<Map> result = await db!.rawQuery("SELECT itemName FROM product");
     print(result);
   }
 

@@ -75,7 +75,15 @@ class _SalesPageState extends State<ShowSale> {
                 final Map<String, dynamic> sale = _sales![index];
                 return ListTile(
                   title: Text(sale['itemName']),
-                  subtitle: Text(sale['itemPrice'].toString()),
+                  subtitle: Row(
+                    children: [
+                      Text(sale['itemPrice'].toString()),
+                      const SizedBox(
+                        width: 100,
+                      ),
+                      Text(sale['totalInvoice'].toString()),
+                    ],
+                  ),
                   trailing: Text(sale['quantity'].toString()),
                 );
               },
